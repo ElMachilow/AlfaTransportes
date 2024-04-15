@@ -823,7 +823,7 @@ video {
 	margin-bottom: 3rem;
 }
 
-.header h1 {
+.header h2 {
 	margin-bottom: 0.5rem;
 	color: #fff;
 }
@@ -2143,7 +2143,7 @@ a #home-tab .nav-link{
 		position: relative;
 	}
 
-	.header h1 {
+	.header h2 {
 		font: 700 3.5rem/4rem "Montserrat", sans-serif;
 	}
 	/* end of header */
@@ -2473,7 +2473,7 @@ a #home-tab .nav-link{
 
 
 	/* Extra Pages */
-	.ex-header h1 {
+	.ex-header h2 {
 		width: 80%;
 		margin-right: auto;
 		margin-left: auto;
