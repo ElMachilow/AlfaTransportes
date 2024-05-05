@@ -1,0 +1,6 @@
+input[type="text"].titulo {
+    border: none; /* Elimina el borde */
+    outline: none; /* Elimina el contorno al hacer clic */
+    font-size: 2rem; /* Tamaño de fuente adecuado para un título */
+    width: 100%; /* Ancho completo del contenedor */
+}

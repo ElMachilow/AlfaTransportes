@@ -654,7 +654,7 @@ input[type='checkbox'] {
 /*     03. Navigation     */
 /**************************/
 .navbar-custom {
-	visibility: hidden; 
+	visibility: hidden;
 	padding-top: 0.375rem;
 	padding-bottom: 0.375rem;
 	background-color: #E6E8EB;
@@ -663,46 +663,64 @@ input[type='checkbox'] {
 	transition: all 0.2s;
 }
 
-.navbar-custom .navbar-brand {
-	font-size: 0;
+.navbar-custom-system {
+	/*visibility: hidden; */
+	padding-top: 0.375rem;
+	padding-bottom: 0.375rem;
+	background-color: #861315;
+	box-shadow: 0 0.0625rem 0.375rem 0 rgba(0, 0, 0, 0.1);
+	font: 600 1.25rem/1.25rem "Open Sans", sans-serif;
+	transition: all 0.2s;
 }
 
-.navbar-custom .navbar-brand.logo-image img {
+.navbar-custom .navbar-brand,
+.navbar-custom-system .navbar-brand {
+    font-size: 0;
+}
+
+.navbar-custom .navbar-brand.logo-image img,
+.navbar-custom-system .navbar-brand.logo-image img {
     width: 12rem;
-	height: 4rem;
-	-webkit-backface-visibility: hidden;
+    height: 4rem;
+    -webkit-backface-visibility: hidden;
 }
 
-.navbar-custom .navbar-brand.logo-text {
-	margin-top: 0.25rem;
-	margin-bottom: 0.25rem;
-	font: 700 2.25rem/1.5rem "Montserrat", sans-serif;
-	color: #fff;
-	text-decoration: none;
+.navbar-custom .navbar-brand.logo-text,
+.navbar-custom-system .navbar-brand.logo-text {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font: 700 2.25rem/1.5rem "Montserrat", sans-serif;
+    color: #fff;
+    text-decoration: none;
 }
 
-.navbar-custom .navbar-nav {
-	margin-top: 0.75rem;
-	margin-bottom: 0.5rem;
+.navbar-custom .navbar-nav,
+.navbar-custom-system .navbar-nav {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
-.navbar-custom .nav-item .nav-link {
-	padding: 0.625rem 0.75rem 0.625rem 0.75rem;
-	color:  #2f4964;
-	text-decoration: none;
-	transition: all 0.2s ease;
+.navbar-custom .nav-item .nav-link,
+.navbar-custom-system .nav-item .nav-link {
+    padding: 0.625rem 0.75rem 0.625rem 0.75rem;
+    color: #2f4964;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .navbar-custom .nav-item .nav-link:hover,
-.navbar-custom .nav-item .nav-link.active {
-	color:#861315;
+.navbar-custom .nav-item .nav-link.active,
+.navbar-custom-system .nav-item .nav-link:hover,
+.navbar-custom-system .nav-item .nav-link.active {
+    color: #861315;
 }
 
 /* Dropdown Menu */
-.navbar-custom .dropdown:hover > .dropdown-menu {
-	display: block; /* this makes the dropdown menu stay open while hovering it */
-	min-width: auto;
-	animation: fadeDropdown 0.2s; /* required for the fade animation */
+.navbar-custom .dropdown:hover > .dropdown-menu,
+.navbar-custom-system .dropdown:hover > .dropdown-menu {
+    display: block; /* esto hace que el menú desplegable permanezca abierto al pasar el ratón por encima */
+    min-width: auto;
+    animation: fadeDropdown 0.2s; /* requerido para la animación de desvanecimiento */
 }
 
 @keyframes fadeDropdown {
@@ -2040,6 +2058,7 @@ a #home-tab .nav-link{
     margin: 0; 
     transition: all 0.3s;
 }
+
 /*****************************/
 /*     21. Media Queries     */
 /*****************************/	

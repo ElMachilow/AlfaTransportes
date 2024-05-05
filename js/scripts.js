@@ -288,7 +288,8 @@
 
 
     /* Privacy Form */
-    $("#privacyForm").validator().on("submit", function(event) {
+    $("#loginForm").validator().on("submit", function(event) {
+        console.log('entra 1');
     	if (event.isDefaultPrevented()) {
             // handle the invalid form...
             pformError();
@@ -301,19 +302,19 @@
     });
 
     function psubmitForm() {
-        // initiate variables with form content
-		var name = $("#pname").val();
-		var email = $("#pemail").val();
-        var select = $("#pselect").val();
-        var terms = $("#pterms").val();
-        
+        console.log('entra 2');
+        // initiate variables with form content 
+		var email = $("#pemail").val(); 
+        var password = $("#ppassword").val();
+
         $.ajax({
             type: "POST",
-            url: "php/privacyform-process.php",
-            data: "name=" + name + "&email=" + email + "&select=" + select + "&terms=" + terms, 
+            url: "php/login-process.php",
+            data:"&email=" + email + "&password=" + password, 
             success: function(text) {
                 if (text == "success") {
-                    pformSuccess();
+                    console.log('entra 3'); 
+                    pformSuccess(); 
                 } else {
                     pformError();
                     psubmitMSG(false, text);
@@ -323,13 +324,15 @@
 	}
 
     function pformSuccess() {
-        $("#privacyForm")[0].reset();
-        psubmitMSG(true, "Request Submitted!");
+        $("#loginForm")[0].reset();
+        psubmitMSG(true, "Inicio de sesión exitoso");
         $("input").removeClass('notEmpty'); // resets the field label after submission
+        
+        window.location.href = "news-admin.html";
     }
 
     function pformError() {
-        $("#privacyForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        $("#loginForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
             $(this).removeClass();
         });
 	}
@@ -343,7 +346,64 @@
         $("#pmsgSubmit").removeClass().addClass(msgClasses).text(msg);
     }
     
+    /* NEWS */
+    $("#newsForm").validator().on("submit", function(event) {
+        console.log('entra 1');
+    	if (event.isDefaultPrevented()) {
+            // handle the invalid form...
+           /* pformError();
+            psubmitMSG(false, "Please fill all fields!");*/
+        } else {
+            // everything looks good!
+            event.preventDefault();
+            nsubmitForm();
+        }
+    });
 
+    function nsubmitForm() {
+
+        $("#newsForm").submit(function(e) {
+            e.preventDefault();
+            
+            var formData = new FormData(this);
+            
+            $.ajax({
+                url:  "php/news-process.php",
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    // Puedes hacer algo con la respuesta aquí
+                }
+            });
+        });
+       
+        // initiate variables with form content 
+		/*var title = $("#ptitle").val(); 
+        var detail = $("#pdetail").val();
+        var imagen = $("#pimagen")[0].files[0];
+
+        console.log('entra 2', detail);
+
+        $.ajax({
+            type: "POST",
+            url: "php/news-process.php",
+            data:"&title=" + title + "&detail=" + detail + "&image=" + imagen, 
+            success: function(text) {
+                if (text == "success") {
+                    console.log('entra 3'); 
+                    //pformSuccess(); 
+                } else {
+                   /* pformError();
+                    psubmitMSG(false, text); */
+             /*   }
+            }
+        }); */
+	}
+
+    /* END NEWS */
     /* Back To Top Button */
     // create the back to top button
     $('body').prepend('<a href="body" class="back-to-top page-scroll">Back to Top</a>');
