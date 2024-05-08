@@ -33,11 +33,11 @@ $password = $_POST['password'];
 // Consulta SQL para verificar las credenciales del usuario
 $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
 $result = $conn->query($sql);
-
+ 
 if ($result->num_rows > 0) {
     // Las credenciales son correctas 
-    //echo "Inicio de sesión exitoso"; 
-    echo "success";
+    $user = $result->fetch_assoc(); // Obtener los datos del usuario
+    echo json_encode(array("status" => "success", "user" => $user)); // Devolver "success" y los datos del usuario
 } else {
     // Las credenciales son incorrectas
     echo "Correo electrónico o contraseña incorrectos";

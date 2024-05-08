@@ -310,15 +310,31 @@
         $.ajax({
             type: "POST",
             url: "php/login-process.php",
-            data:"&email=" + email + "&password=" + password, 
-            success: function(text) {
-                if (text == "success") {
-                    console.log('entra 3'); 
-                    pformSuccess(); 
-                } else {
+            data: { email: email, password: password }, // Pasar los datos como objeto
+            dataType: 'json', // Esperar JSON como respuesta
+            success: function(response) { 
+                if (response.status === "success") { 
+                    console.log('QUE TRAE ',response)
+                    pformSuccess();  
+
+                    // Crear un nuevo objeto con los campos necesarios
+                    var userData = {
+                        Name: response.user.Name,
+                        email: response.user.email,
+                        idUser: response.user.idUser,
+                        lastName: response.user.lastName
+                    };
+                    // Guardar los datos del usuario en localStorage
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                } else { 
                     pformError();
-                    psubmitMSG(false, text);
+                    psubmitMSG(false, response);
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la solicitud AJAX:', error);
+                // Manejar errores de la solicitud AJAX aquí
             }
         });
 	}
@@ -366,7 +382,11 @@
             e.preventDefault();
             
             var formData = new FormData(this);
-            
+            var user = JSON.parse(localStorage.getItem('user')); // Obtener los datos del usuario del localStorage
+            console.log('ID', user.idUser)
+            // Agregar los datos del usuario al formData
+            formData.append('idUser', user.idUser);
+
             $.ajax({
                 url:  "php/news-process.php",
                 type: 'POST',

@@ -4,6 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Datos del formulario
     $title = $_POST["title"];
     $detail = $_POST["detail"];
+    $idUser = intval($_POST["idUser"]);
     
     // Guardar imagen
     $imagenTmpNombre = $_FILES['image']['tmp_name'];
@@ -21,15 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar la conexión
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
-    }
-    
+    } 
+    echo  'QUE IMPRIME EN ID USER';
+    echo  $idUser;
     // Preparar y ejecutar la consulta SQL
     $current_date = date("Y-m-d"); 
     $sql = "INSERT INTO news (idUser, title, detail, image, date) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-
-    // Vincular parámetros utilizando variables por referencia
-    $idUser = 1; // Reemplaza esto con el ID del usuario apropiado
+   
+    // Vincular parámetros utilizando variables por referencia 
     $stmt->bind_param("sssss", $idUser, $title, $detail, $imagenContenido, $current_date);
 
     
