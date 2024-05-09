@@ -4,3 +4,13 @@ input[type="text"].titulo {
     font-size: 2rem; /* Tamaño de fuente adecuado para un título */
     width: 100%; /* Ancho completo del contenedor */
 }
+
+.item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  .item img {
+    max-width: 100px; /* Tamaño de la imagen */
+    height: auto;
+  }

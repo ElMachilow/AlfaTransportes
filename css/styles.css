@@ -855,8 +855,17 @@ video {
 	margin-right: 0.5rem;
 	margin-bottom: 1.25rem;
 }
-
-
+/*********************/
+/*      10. News     */
+/*********************/
+.basic-3 {
+	padding-top: 6.5rem;
+	padding-bottom: 3rem;
+	z-index: 3 !important;
+	position: relative;
+	background-color: #fff;
+	 
+}
 
 /*********************/
 /*     05. Intro     */
@@ -1916,7 +1925,7 @@ a.back-to-top {
 	width: 2.625rem;
 	height: 2.625rem;
 	border-radius: 1.875rem;
-	background:#BF1E22  url("../images/up-arrow.png") no-repeat center 47%;
+	background:#BF1E22  url(".10./images/up-arrow.png") no-repeat center 47%;
 	background-size: 1.125rem 1.125rem;
 	text-indent: -9999px;
 }
