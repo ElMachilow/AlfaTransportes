@@ -1,36 +1,48 @@
 <?php
-// Conexión a la base de datos
-$servername = "127.0.0.1:3308";
-$username = "root";
-$password = "mysql";
-$dbname = "alfa"; 
+class NewsController {
+    private $servername = "127.0.0.1:3308";
+    private $username = "root";
+    private $password = "mysql";
+    private $dbname = "alfa";
+    private $conn;
 
+    // Constructor para inicializar la conexión
+    public function __construct() {
+        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+        if ($this->conn->connect_error) {
+            die("Conexión fallida: " . $this->conn->connect_error);
+        }
+    }
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    // Método para obtener noticias desde la base de datos
+    public function getNews() {
+        $sql = "SELECT idNews, title, date, detail FROM news";
+        $result = $this->conn->query($sql);
+
+        $news_data = array();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $news_data[] = $row;
+            }
+            return json_encode($news_data);
+        } else {
+            return "0 resultados";
+        }
+    }
+
+    // Cerrar la conexión al destruir el objeto
+    public function __destruct() {
+        $this->conn->close();
+    }
 }
 
-// Consulta SQL para obtener los datos de la tabla 'alfa.news'
-$sql = "SELECT idNews, title, date, image, detail FROM news";
-$result = $conn->query($sql);
+// Crear una instancia de la clase y llamar al método según la solicitud
+$newsController = new NewsController();
 
-    // Verificar si hay resultados
-    if ($result->num_rows > 0) {
-    // Array para almacenar los datos de las noticias
-    $news_data = array();
-
-    // Recorrer los resultados y almacenarlos en el array
-    while ($row = $result->fetch_assoc()) {
-        $news_data[] = $row;
-    }
-
-    // Convertir el array a formato JSON y enviarlo como respuesta
-    echo  json_encode($news_data); 
-    } else {
-        echo "0 resultados";
-    }
-    $conn->close();
-
+// Verificar si la solicitud proviene de JavaScript
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getNews') {
+    echo $newsController->getNews();
+}
 ?>

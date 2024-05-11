@@ -399,28 +399,7 @@
                 }
             });
         });
-       
-        // initiate variables with form content 
-		/*var title = $("#ptitle").val(); 
-        var detail = $("#pdetail").val();
-        var imagen = $("#pimagen")[0].files[0];
-
-        console.log('entra 2', detail);
-
-        $.ajax({
-            type: "POST",
-            url: "php/news-process.php",
-            data:"&title=" + title + "&detail=" + detail + "&image=" + imagen, 
-            success: function(text) {
-                if (text == "success") {
-                    console.log('entra 3'); 
-                    //pformSuccess(); 
-                } else {
-                   /* pformError();
-                    psubmitMSG(false, text); */
-             /*   }
-            }
-        }); */
+ 
 	}
 
     /* END NEWS */
@@ -446,46 +425,25 @@
     /*NEW ALL LIST  */
 
  
-    function loadNews() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "php/list-all-news-process.php", true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log('UQE DEVUELVE',xhr.responseText);
-                var newsData = JSON.parse(xhr.responseText);
-                var newsContainer = document.getElementById("newsList");
-                var html = "";
+    function getNews() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Manejar la respuesta del servidor
+                console.log('QUE DATA TRAE',this.responseText);
 
-                // Recorrer los datos de las noticias y generar HTML
-                for (var i = 0; i < newsData.length; i++) {
-                    var news = newsData[i];
-                    html += '<div class="col-lg-4">';
-                    html += '<div class="item">';
-                    html += '<div class="p-3">';
-                    // La ruta de la imagen y el título deben provenir de los datos de la noticia
-                    html += '<img src="' + news.image + '" class="img-fluid" alt="' + news.title + '">';
-                    html += '</div>';
-                    html += '<div class="p-3">';
-                    html += '<h2>' + news.title + '</h2>';
-                    // Agregar los botones con la clase btn de Bootstrap
-                    html += '<button type="button" class="btn btn-primary">Botón 1</button>';
-                    html += '<button type="button" class="btn btn-secondary">Botón 2</button>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                }
-
-                // Mostrar el HTML generado en el contenedor de noticias
-                newsContainer.innerHTML = html;
-            } else {
-                console.error("Error al cargar las noticias: " + xhr.status);
+                var newsData = JSON.parse(this.responseText);
+                displayNews(newsData);
             }
         };
-        xhr.send();
+        // Hacer la solicitud GET al servicio PHP
+        xhttp.open("GET", "php/list-all-news-process.php?action=getNews", true);
+        xhttp.send();
     }
 
+
     // Llamar a la función para cargar las noticias cuando la página se carga completamente
-    window.onload = loadNews;
+    window.onload = getNews;
  
 
 
