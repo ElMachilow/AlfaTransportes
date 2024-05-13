@@ -14,3 +14,6 @@ input[type="text"].titulo {
     max-width: 100px; /* Tamaño de la imagen */
     height: auto;
   }
+  .btn-group .btn {
+    margin-bottom: 5px; /* Espacio entre los botones */
+  }

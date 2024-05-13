@@ -395,6 +395,7 @@
                 processData: false,
                 success: function(response) {
                     console.log(response);
+                    getNews();
                     // Puedes hacer algo con la respuesta aquí
                 }
             });
@@ -423,30 +424,77 @@
 
 
     /*NEW ALL LIST  */
-
  
-    function getNews() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                // Manejar la respuesta del servidor
-                console.log('QUE DATA TRAE',this.responseText);
 
-                var newsData = JSON.parse(this.responseText);
-                displayNews(newsData);
-            }
+   // Función para eliminar una noticia mediante AJAX 
+
+        // Llamar a la función para obtener y mostrar las noticias al cargar la página
+        window.onload = function () {
+            getNews();
         };
-        // Hacer la solicitud GET al servicio PHP
-        xhttp.open("GET", "php/list-all-news-process.php?action=getNews", true);
-        xhttp.send();
-    }
-
-
-    // Llamar a la función para cargar las noticias cuando la página se carga completamente
-    window.onload = getNews;
  
-
-
-
 
 })(jQuery);
+
+
+        // Función para realizar la solicitud AJAX y mostrar las noticias
+        function getNews() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var newsData = JSON.parse(xhr.responseText);
+                    showNews(newsData);
+                } else if (xhr.readyState === 4 && xhr.status === 404) {
+                    console.log('Error: No se encontraron noticias');
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para mostrar las noticias en el contenedor HTML
+        // Función para mostrar las noticias en el contenedor HTML
+        // Función para mostrar las noticias en el contenedor HTML
+        function showNews(newsData) {
+            var newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar noticias
+
+            // Iterar sobre los datos de las noticias
+            newsData.forEach(function (news, index) {
+                // Crear un div para cada noticia y aplicar clases según la estructura HTML deseada
+                var newsItem = document.createElement('div');
+                newsItem.classList.add('col-lg-4');
+                newsItem.innerHTML = '<div class="list-item">' +
+                    '<div class="p-3">' +
+                    '<h2>' + news.title + '</h2>' +
+                    '<img src="data:image/jpeg;base64,' + news.image + '" class="img-fluid" alt="Imagen ' + (index + 1) + '">' +
+                    '</div>' +
+                    '<div class="p-3">' + 
+                    '<div class="btn-group">' + 
+                    '<button type="button" class="btn btn-primary mr-2" onclick="updateNews(' + news.idNews + ')"><i class="fas fa-edit"></i> Actualizar</button>' +
+                    '<button type="button" class="btn btn-secondary" onclick="deleteNews(' + news.idNews + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                // Agregar el div de la noticia al contenedor
+                newsContainer.appendChild(newsItem);
+            });
+        }
+    function deleteNews(idNews) {
+        // Aquí puedes implementar la lógica para eliminar la noticia con el ID proporcionado
+        console.log('Eliminar noticia con ID:', idNews);
+    var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta noticia?");
+    if (confirmDelete) {
+        $.ajax({
+            type: "POST",
+            url: 'php/list-all-news-process.php?action=delete', // Reemplaza "tuscript.php" con la ruta a tu script PHP
+            data: { delete: idNews },
+            success: function(response) {
+                alert(response); // Muestra la respuesta del servidor
+                getNews();
+                // Actualizar la lista de noticias o realizar otras acciones necesarias
+            }
+        });
+    }
+    }
