@@ -231,6 +231,27 @@
     <script src="js/isotope.pkgd.min.js"></script> <!-- Isotope for filter -->
     <script src="js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script> <!-- Custom scripts -->
+
+    <style>
+
+    .image-container {
+        max-height: 100vh; 
+        min-width: 30vh; /* Establece el alto de 100vh */
+        display: flex; /* Usa flexbox para centrar la imagen verticalmente */
+        align-items: start; /* Centra verticalmente la imagen */
+        overflow: hidden; /* Oculta el desbordamiento de la imagen */
+    }
+
+    .image-container img {
+        max-height: 100vh; 
+        min-width: 30vh;/* Establece el alto máximo de la imagen a 100vh */
+        width: auto; /* Permite que el ancho de la imagen se ajuste automáticamente */
+        max-width: 100%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+        height: auto; /* Permite que la altura de la imagen se ajuste automáticamente */
+    }
+
+
+    </style>
  
 </body>
 </html>
