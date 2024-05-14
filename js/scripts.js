@@ -5,77 +5,77 @@
 */
 
 
-(function($) {
-    "use strict"; 
-	
-	/* Preloader */
-	$(window).on('load', function() {
-		var preloaderFadeOutTime = 500;
-		function hidePreloader() {
-			var preloader = $('.spinner-wrapper');
-			setTimeout(function() {
-				preloader.fadeOut(preloaderFadeOutTime);
-			}, 500);
-		}
-		hidePreloader();
-	});
+(function ($) {
+    "use strict";
 
-	
-	/* Navbar Scripts */
-	// jQuery to collapse the navbar on scroll
-    $(window).on('scroll load', function() {
-		if ($(".navbar").offset().top > 20) {
-			$(".fixed-top").addClass("top-nav-collapse");
-		} else {
-			$(".fixed-top").removeClass("top-nav-collapse");
-		}
+    /* Preloader */
+    $(window).on('load', function () {
+        var preloaderFadeOutTime = 500;
+        function hidePreloader() {
+            var preloader = $('.spinner-wrapper');
+            setTimeout(function () {
+                preloader.fadeOut(preloaderFadeOutTime);
+            }, 500);
+        }
+        hidePreloader();
     });
 
-	// jQuery for page scrolling feature - requires jQuery Easing plugin
-	$(function() {
-		$(document).on('click', 'a.page-scroll', function(event) {
-			var $anchor = $(this);
-			$('html, body').stop().animate({
-				scrollTop: $($anchor.attr('href')).offset().top
-			}, 600, 'easeInOutExpo');
-			event.preventDefault();
-		});
-	});
+
+    /* Navbar Scripts */
+    // jQuery to collapse the navbar on scroll
+    $(window).on('scroll load', function () {
+        if ($(".navbar").offset().top > 20) {
+            $(".fixed-top").addClass("top-nav-collapse");
+        } else {
+            $(".fixed-top").removeClass("top-nav-collapse");
+        }
+    });
+
+    // jQuery for page scrolling feature - requires jQuery Easing plugin
+    $(function () {
+        $(document).on('click', 'a.page-scroll', function (event) {
+            var $anchor = $(this);
+            $('html, body').stop().animate({
+                scrollTop: $($anchor.attr('href')).offset().top
+            }, 600, 'easeInOutExpo');
+            event.preventDefault();
+        });
+    });
 
     // closes the responsive menu on menu item click
-    $(".navbar-nav li a").on("click", function(event) {
-    if (!$(this).parent().hasClass('dropdown'))
-        $(".navbar-collapse").collapse('hide');
+    $(".navbar-nav li a").on("click", function (event) {
+        if (!$(this).parent().hasClass('dropdown'))
+            $(".navbar-collapse").collapse('hide');
     });
 
 
     /* Rotating Text - Morphtext */
-	$("#js-rotating").Morphext({
-		// The [in] animation type. Refer to Animate.css for a list of available animations.
-		animation: "fadeIn",
-		// An array of phrases to rotate are created based on this separator. Change it if you wish to separate the phrases differently (e.g. So Simple | Very Doge | Much Wow | Such Cool).
-		separator: ",",
-		// The delay between the changing of each phrase in milliseconds.
-		speed: 2000,
-		complete: function () {
-			// Called after the entrance animation is executed.
-		}
+    $("#js-rotating").Morphext({
+        // The [in] animation type. Refer to Animate.css for a list of available animations.
+        animation: "fadeIn",
+        // An array of phrases to rotate are created based on this separator. Change it if you wish to separate the phrases differently (e.g. So Simple | Very Doge | Much Wow | Such Cool).
+        separator: ",",
+        // The delay between the changing of each phrase in milliseconds.
+        speed: 2000,
+        complete: function () {
+            // Called after the entrance animation is executed.
+        }
     });
-    
+
 
     /* Card Slider - Swiper */
-	var cardSlider = new Swiper('.card-slider', {
-		autoplay: {
+    var cardSlider = new Swiper('.card-slider', {
+        autoplay: {
             delay: 4000,
             disableOnInteraction: false
-		},
+        },
         loop: true,
         navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev'
-		},
-		slidesPerView: 3,
-		spaceBetween: 20,
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
+        slidesPerView: 3,
+        spaceBetween: 20,
         breakpoints: {
             // when window is <= 992px
             992: {
@@ -84,24 +84,24 @@
             // when window is <= 768px
             768: {
                 slidesPerView: 1
-            } 
+            }
         }
     });
 
-    
+
     /* Lightbox - Magnific Popup */
-	$('.popup-with-move-anim').magnificPopup({
-		type: 'inline',
-		fixedContentPos: false, /* keep it false to avoid html tag shift with margin-right: 17px */
-		fixedBgPos: true,
-		overflowY: 'auto',
-		closeBtnInside: true,
-		preloader: false,
-		midClick: true,
-		removalDelay: 300,
-		mainClass: 'my-mfp-slide-bottom'
+    $('.popup-with-move-anim').magnificPopup({
+        type: 'inline',
+        fixedContentPos: false, /* keep it false to avoid html tag shift with margin-right: 17px */
+        fixedBgPos: true,
+        overflowY: 'auto',
+        closeBtnInside: true,
+        preloader: false,
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-slide-bottom'
     });
-    
+
 
     /* Filter - Isotope */
     var $grid = $('.grid').isotope({
@@ -109,69 +109,69 @@
         itemSelector: '.element-item',
         layoutMode: 'fitRows'
     });
-    
+
     // filter items on button click
-    $('.filters-button-group').on( 'click', 'a', function() {
+    $('.filters-button-group').on('click', 'a', function () {
         var filterValue = $(this).attr('data-filter');
         $grid.isotope({ filter: filterValue });
     });
-    
+
     // change is-checked class on buttons
-    $('.button-group').each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'a', function() {
+    $('.button-group').each(function (i, buttonGroup) {
+        var $buttonGroup = $(buttonGroup);
+        $buttonGroup.on('click', 'a', function () {
             $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
-        });	
+            $(this).addClass('is-checked');
+        });
     });
-    
+
 
     /* Counter - CountTo */
-	var a = 0;
-	$(window).scroll(function() {
-		if ($('#counter').length) { // checking if CountTo section exists in the page, if not it will not run the script and avoid errors	
-			var oTop = $('#counter').offset().top - window.innerHeight;
-			if (a == 0 && $(window).scrollTop() > oTop) {
-			$('.counter-value').each(function() {
-				var $this = $(this),
-				countTo = $this.attr('data-count');
-				$({
-				countNum: $this.text()
-				}).animate({
-					countNum: countTo
-				},
-				{
-					duration: 2000,
-					easing: 'swing',
-					step: function() {
-					$this.text(Math.floor(this.countNum));
-					},
-					complete: function() {
-					$this.text(this.countNum);
-					//alert('finished');
-					}
-				});
-			});
-			a = 1;
-			}
-		}
+    var a = 0;
+    $(window).scroll(function () {
+        if ($('#counter').length) { // checking if CountTo section exists in the page, if not it will not run the script and avoid errors	
+            var oTop = $('#counter').offset().top - window.innerHeight;
+            if (a == 0 && $(window).scrollTop() > oTop) {
+                $('.counter-value').each(function () {
+                    var $this = $(this),
+                        countTo = $this.attr('data-count');
+                    $({
+                        countNum: $this.text()
+                    }).animate({
+                        countNum: countTo
+                    },
+                        {
+                            duration: 2000,
+                            easing: 'swing',
+                            step: function () {
+                                $this.text(Math.floor(this.countNum));
+                            },
+                            complete: function () {
+                                $this.text(this.countNum);
+                                //alert('finished');
+                            }
+                        });
+                });
+                a = 1;
+            }
+        }
     });
 
 
     /* Move Form Fields Label When User Types */
     // for input and textarea fields
-    $("input, textarea").keyup(function(){
-		if ($(this).val() != '') {
-			$(this).addClass('notEmpty');
-		} else {
-			$(this).removeClass('notEmpty');
-		}
+    $("input, textarea").keyup(function () {
+        if ($(this).val() != '') {
+            $(this).addClass('notEmpty');
+        } else {
+            $(this).removeClass('notEmpty');
+        }
     });
 
 
     /* Call Me Form */
-    $("#callMeForm").validator().on("submit", function(event) {
-    	if (event.isDefaultPrevented()) {
+    $("#callMeForm").validator().on("submit", function (event) {
+        if (event.isDefaultPrevented()) {
             // handle the invalid form...
             lformError();
             lsubmitMSG(false, "Please fill all fields!");
@@ -184,17 +184,17 @@
 
     function lsubmitForm() {
         // initiate variables with form content
-		var name = $("#lname").val();
-		var phone = $("#lphone").val();
-		var email = $("#lemail").val();
-		var select = $("#lselect").val();
+        var name = $("#lname").val();
+        var phone = $("#lphone").val();
+        var email = $("#lemail").val();
+        var select = $("#lselect").val();
         var terms = $("#lterms").val();
-        
+
         $.ajax({
             type: "POST",
             url: "php/callmeform-process.php",
-            data: "name=" + name + "&phone=" + phone + "&email=" + email + "&select=" + select + "&terms=" + terms, 
-            success: function(text) {
+            data: "name=" + name + "&phone=" + phone + "&email=" + email + "&select=" + select + "&terms=" + terms,
+            success: function (text) {
                 if (text == "success") {
                     lformSuccess();
                 } else {
@@ -203,7 +203,7 @@
                 }
             }
         });
-	}
+    }
 
     function lformSuccess() {
         $("#callMeForm")[0].reset();
@@ -212,10 +212,10 @@
     }
 
     function lformError() {
-        $("#callMeForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        $("#callMeForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
             $(this).removeClass();
         });
-	}
+    }
 
     function lsubmitMSG(valid, msg) {
         if (valid) {
@@ -228,8 +228,8 @@
 
 
     /* Contact Form */
-    $("#contactForm").validator().on("submit", function(event) {
-    	if (event.isDefaultPrevented()) {
+    $("#contactForm").validator().on("submit", function (event) {
+        if (event.isDefaultPrevented()) {
             // handle the invalid form...
             cformError();
             csubmitMSG(false, "¡Por favor llena todos los campos!");
@@ -242,15 +242,15 @@
 
     function csubmitForm() {
         // initiate variables with form content
-		var name = $("#cname").val();
-		var email = $("#cemail").val();
+        var name = $("#cname").val();
+        var email = $("#cemail").val();
         var message = $("#cmessage").val();
         var terms = $("#cterms").val();
         $.ajax({
             type: "POST",
             url: "php/contactform-process.php",
-            data: "name=" + name + "&email=" + email + "&message=" + message + "&terms=" + terms, 
-            success: function(text) {
+            data: "name=" + name + "&email=" + email + "&message=" + message + "&terms=" + terms,
+            success: function (text) {
                 if (text == "success") {
                     cformSuccess();
                     console.log('entra a succes');
@@ -262,7 +262,7 @@
                 }
             }
         });
-	}
+    }
 
     function cformSuccess() {
         $("#contactForm")[0].reset();
@@ -272,10 +272,10 @@
     }
 
     function cformError() {
-        $("#contactForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        $("#contactForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
             $(this).removeClass();
         });
-	}
+    }
 
     function csubmitMSG(valid, msg) {
         if (valid) {
@@ -288,9 +288,9 @@
 
 
     /* Privacy Form */
-    $("#loginForm").validator().on("submit", function(event) {
+    $("#loginForm").validator().on("submit", function (event) {
         console.log('entra 1');
-    	if (event.isDefaultPrevented()) {
+        if (event.isDefaultPrevented()) {
             // handle the invalid form...
             pformError();
             psubmitMSG(false, "Please fill all fields!");
@@ -304,7 +304,7 @@
     function psubmitForm() {
         console.log('entra 2');
         // initiate variables with form content 
-		var email = $("#pemail").val(); 
+        var email = $("#pemail").val();
         var password = $("#ppassword").val();
 
         $.ajax({
@@ -312,10 +312,10 @@
             url: "php/login-process.php",
             data: { email: email, password: password }, // Pasar los datos como objeto
             dataType: 'json', // Esperar JSON como respuesta
-            success: function(response) { 
-                if (response.status === "success") { 
-                    console.log('QUE TRAE ',response)
-                    pformSuccess();  
+            success: function (response) {
+                if (response.status === "success") {
+                    console.log('QUE TRAE ', response)
+                    pformSuccess();
 
                     // Crear un nuevo objeto con los campos necesarios
                     var userData = {
@@ -327,31 +327,31 @@
                     // Guardar los datos del usuario en localStorage
                     localStorage.setItem('user', JSON.stringify(userData));
 
-                } else { 
+                } else {
                     pformError();
                     psubmitMSG(false, response);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Error en la solicitud AJAX:', error);
                 // Manejar errores de la solicitud AJAX aquí
             }
         });
-	}
+    }
 
     function pformSuccess() {
         $("#loginForm")[0].reset();
         psubmitMSG(true, "Inicio de sesión exitoso");
         $("input").removeClass('notEmpty'); // resets the field label after submission
-        
+
         window.location.href = "news-admin.html";
     }
 
     function pformError() {
-        $("#loginForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        $("#loginForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
             $(this).removeClass();
         });
-	}
+    }
 
     function psubmitMSG(valid, msg) {
         if (valid) {
@@ -361,14 +361,14 @@
         }
         $("#pmsgSubmit").removeClass().addClass(msgClasses).text(msg);
     }
-    
+
     /* NEWS */
-    $("#newsForm").validator().on("submit", function(event) {
+    $("#newsForm").validator().on("submit", function (event) {
         console.log('entra 1');
-    	if (event.isDefaultPrevented()) {
+        if (event.isDefaultPrevented()) {
             // handle the invalid form...
-           /* pformError();
-            psubmitMSG(false, "Please fill all fields!");*/
+            /* pformError();
+             psubmitMSG(false, "Please fill all fields!");*/
         } else {
             // everything looks good!
             event.preventDefault();
@@ -378,9 +378,9 @@
 
     function nsubmitForm() {
 
-        $("#newsForm").submit(function(e) {
+        $("#newsForm").submit(function (e) {
             e.preventDefault();
-            
+
             var formData = new FormData(this);
             var user = JSON.parse(localStorage.getItem('user')); // Obtener los datos del usuario del localStorage
             console.log('ID', user.idUser)
@@ -388,27 +388,27 @@
             formData.append('idUser', user.idUser);
 
             $.ajax({
-                url:  "php/news-process.php",
+                url: "php/news-process.php",
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     getNews();
                     // Puedes hacer algo con la respuesta aquí
                 }
             });
         });
- 
-	}
+
+    }
 
     /* END NEWS */
     /* Back To Top Button */
     // create the back to top button
     $('body').prepend('<a href="body" class="back-to-top page-scroll">Back to Top</a>');
     var amountScrolled = 700;
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         if ($(window).scrollTop() > amountScrolled) {
             $('a.back-to-top').fadeIn('500');
         } else {
@@ -417,97 +417,97 @@
     });
 
 
-	/* Removes Long Focus On Buttons */
-	$(".button, a, button").mouseup(function() {
-		$(this).blur();
-	});
+    /* Removes Long Focus On Buttons */
+    $(".button, a, button").mouseup(function () {
+        $(this).blur();
+    });
 
 
- 
- 
 
-   // Función para eliminar una noticia mediante AJAX 
 
-        // Llamar a la función para obtener y mostrar las noticias al cargar la página
-        window.onload = function () {
-            getNews();
-        };
- 
+
+    // Función para eliminar una noticia mediante AJAX 
+
+    // Llamar a la función para obtener y mostrar las noticias al cargar la página
+    window.onload = function () {
+        getNews();
+    };
+
 
 })(jQuery);
 
 
-        // Función para realizar la solicitud AJAX y mostrar las noticias
-        function getNews() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var newsData = JSON.parse(xhr.responseText);
-                    showNews(newsData);
-                } else if (xhr.readyState === 4 && xhr.status === 404) {
-                    console.log('Error: No se encontraron noticias');
-                }
-            };
-            xhr.send();
+// Función para realizar la solicitud AJAX y mostrar las noticias
+function getNews() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var newsData = JSON.parse(xhr.responseText);
+            showNews(newsData);
+        } else if (xhr.readyState === 4 && xhr.status === 404) {
+            console.log('Error: No se encontraron noticias');
         }
+    };
+    xhr.send();
+}
 
-        // Función para mostrar las noticias en el contenedor HTML
-        // Función para mostrar las noticias en el contenedor HTML
-        // Función para mostrar las noticias en el contenedor HTML
-        function showNews(newsData) {
-            var newsContainer = document.getElementById('newsContainer');
-            newsContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar noticias
+// Función para mostrar las noticias en el contenedor HTML
+// Función para mostrar las noticias en el contenedor HTML
+// Función para mostrar las noticias en el contenedor HTML
+function showNews(newsData) {
+    var newsContainer = document.getElementById('newsContainer');
+    newsContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar noticias
 
-            // Iterar sobre los datos de las noticias
-            newsData.forEach(function (news, index) {
-                // Crear un div para cada noticia y aplicar clases según la estructura HTML deseada
-                var newsItem = document.createElement('div');
-                //newsItem.classList.add('col-lg-4');
-                newsItem.innerHTML = '<div class="list-item">' +
-                    '<div class="p-3">' +
-                    '<h2>' + news.title + '</h2>' +
-                    '<img src="data:image/jpeg;base64,' + news.image + '" class="img-fluid" alt="Imagen ' + (index + 1) + '">' +
-                    '</div>' +
-                    '<div class="p-3">' + 
-                    '<div class="btn-group">' + 
-                    '<button type="button" class="btn btn-primary mr-2" onclick="updateNews(' + news.idNews + ')"><i class="fas fa-edit"></i> Actualizar</button>' +
-                    '<button type="button" class="btn btn-secondary mr-2" onclick="deleteNews(' + news.idNews + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +   
-                    '<button type="button" class="btn btn-info" onclick="viewNews(\'' + news.title + '\')">Ver</button>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+    // Iterar sobre los datos de las noticias
+    newsData.forEach(function (news, index) {
+        // Crear un div para cada noticia y aplicar clases según la estructura HTML deseada
+        var newsItem = document.createElement('div');
+        //newsItem.classList.add('col-lg-4');
+        newsItem.innerHTML = '<div class="list-item">' +
+            '<div class="p-3">' +
+            '<h2>' + news.title + '</h2>' +
+            '<img src="data:image/jpeg;base64,' + news.image + '" class="img-fluid" alt="Imagen ' + (index + 1) + '">' +
+            '</div>' +
+            '<div class="p-3">' +
+            '<div class="btn-group">' +
+            '<button type="button" class="btn btn-primary mr-2" onclick="updateNews(' + news.idNews + ')"><i class="fas fa-edit"></i> Actualizar</button>' +
+            '<button type="button" class="btn btn-secondary mr-2" onclick="deleteNews(' + news.idNews + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +
+            '<button type="button" class="btn btn-info" onclick="viewNews(\'' + news.title + '\')">Ver</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
 
-                // Agregar el div de la noticia al contenedor
-                newsContainer.appendChild(newsItem);
-            });
-        }
-    function deleteNews(idNews) {
-        // Aquí puedes implementar la lógica para eliminar la noticia con el ID proporcionado
-        console.log('Eliminar noticia con ID:', idNews);
+        // Agregar el div de la noticia al contenedor
+        newsContainer.appendChild(newsItem);
+    });
+}
+function deleteNews(idNews) {
+    // Aquí puedes implementar la lógica para eliminar la noticia con el ID proporcionado
+    console.log('Eliminar noticia con ID:', idNews);
     var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta noticia?");
     if (confirmDelete) {
         $.ajax({
             type: "POST",
             url: 'php/list-all-news-process.php?action=delete', // Reemplaza "tuscript.php" con la ruta a tu script PHP
             data: { delete: idNews },
-            success: function(response) {
+            success: function (response) {
                 alert(response); // Muestra la respuesta del servidor
                 getNews();
                 // Actualizar la lista de noticias o realizar otras acciones necesarias
             }
         });
     }
-    }
+}
 
-    function viewNews(title) {
-        var url = '../new.html?title=' + encodeURIComponent(title);
-        window.open(url, '_blank');
-    }
+function viewNews(title) {
+    var url = '../new.html?title=' + encodeURIComponent(title);
+    window.open(url, '_blank');
+}
 
-    function getNewByTitle(title) {
-        console.log('INICIA 1')
+function getNewByTitle(title) {
+    console.log('INICIA 1')
     $.ajax({
         url: 'php/list-all-news-process.php',
         type: 'GET',
@@ -516,18 +516,18 @@
             title: title
         },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.length > 0) {
                 var news = response[0];
                 $('#new h1').text(news.title);
-                
+
                 // Convertir la fecha al formato deseado
                 var date = new Date(news.date);
                 var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                                  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
                 var formattedDate = "Publicado en " + monthNames[date.getMonth()] + ", " + date.getFullYear();
                 $('#new h4').text(formattedDate);
-                
+
                 $('#new img').attr('src', 'data:image/jpeg;base64,' + news.image);
                 $('#new .text-container').html(news.detail);
             } else {
@@ -537,9 +537,9 @@
                 $('#new .text-container').html('');
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('Error:', status, error);
         }
     });
 
-    }
+}
