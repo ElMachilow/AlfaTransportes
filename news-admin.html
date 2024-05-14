@@ -180,7 +180,7 @@
             <div class="col-lg-4">
                 <div class="item">
 
-                    <div  id="newsContainer"></div>
+                    <div  id="newsContainer" style="overflow: auto; height: 100vh;"></div>
 
                 </div> 
             </div>
@@ -239,6 +239,18 @@
     <!-- end of footer -->
  
     <script>
+         var user = JSON.parse(localStorage.getItem('user'));
+        // Verificar la condición aquí
+        if (user && user.idUser) {
+        // Si la condición es verdadera, permitir la carga de la página
+        //document.write("<h1>La condición se cumple, la página puede cargar.</h1>");
+        } else {
+        // Si la condición es falsa, mostrar un mensaje y detener la carga de la página
+       // document.write("<h1>La condición no se cumple, la página no puede cargar.</h1>");
+        window.stop(); // Detener la carga de la página
+        }
+
+
         // Función para mostrar la vista previa de la imagen seleccionada
         function mostrarVistaPrevia() {
             var archivo = document.getElementById("image").files[0];

@@ -520,14 +520,21 @@
             if (response.length > 0) {
                 var news = response[0];
                 $('#new h1').text(news.title);
-                $('#new h4').text(news.date);
+                
+                // Convertir la fecha al formato deseado
+                var date = new Date(news.date);
+                var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                                  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                var formattedDate = "Publicado en " + monthNames[date.getMonth()] + ", " + date.getFullYear();
+                $('#new h4').text(formattedDate);
+                
                 $('#new img').attr('src', 'data:image/jpeg;base64,' + news.image);
-                $('#new .text-container').html(news.detail); // Usar html() en lugar de text()
+                $('#new .text-container').html(news.detail);
             } else {
                 $('#new h1').text('No se encontraron noticias con el título especificado');
                 $('#new h4').text('');
                 $('#new img').attr('src', '');
-                $('#new .text-container').html(''); // Limpiar contenido en caso de no encontrar noticias
+                $('#new .text-container').html('');
             }
         },
         error: function(xhr, status, error) {
