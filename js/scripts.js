@@ -423,7 +423,7 @@
 	});
 
 
-    /*NEW ALL LIST  */
+ 
  
 
    // Función para eliminar una noticia mediante AJAX 
@@ -464,7 +464,7 @@
             newsData.forEach(function (news, index) {
                 // Crear un div para cada noticia y aplicar clases según la estructura HTML deseada
                 var newsItem = document.createElement('div');
-                newsItem.classList.add('col-lg-4');
+                //newsItem.classList.add('col-lg-4');
                 newsItem.innerHTML = '<div class="list-item">' +
                     '<div class="p-3">' +
                     '<h2>' + news.title + '</h2>' +
@@ -504,4 +504,35 @@
     function viewNews(title) {
         var url = '../new.html?title=' + encodeURIComponent(title);
         window.open(url, '_blank');
+    }
+
+    function getNewByTitle(title) {
+        console.log('INICIA 1')
+    $.ajax({
+        url: 'php/list-all-news-process.php',
+        type: 'GET',
+        data: {
+            action: 'getNewsByTitle',
+            title: title
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.length > 0) {
+                var news = response[0];
+                $('#new h1').text(news.title);
+                $('#new h4').text(news.date);
+                $('#new img').attr('src', 'data:image/jpeg;base64,' + news.image);
+                $('#new .text-container').html(news.detail); // Usar html() en lugar de text()
+            } else {
+                $('#new h1').text('No se encontraron noticias con el título especificado');
+                $('#new h4').text('');
+                $('#new img').attr('src', '');
+                $('#new .text-container').html(''); // Limpiar contenido en caso de no encontrar noticias
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', status, error);
+        }
+    });
+
     }

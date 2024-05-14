@@ -65,13 +65,48 @@ try {
 
             $stmt->close();
         }
+        public function getNewsByTitle($title) {
+            $stmt = $this->conn->prepare("SELECT idNews, title, date, nameImg, detail FROM news WHERE title = ?");
+            $stmt->bind_param("s", $title);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            $news_data = array();
+        
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    // Obtener la imagen para esta noticia
+                    $image = $this->getImage($row['idNews']);
+        
+                    // Agregar la imagen al arreglo de datos de la noticia
+                    $row['image'] = $image;
+        
+                    // Agregar la noticia al arreglo de datos de las noticias
+                    $news_data[] = $row;
+                }
+        
+                // Devolver las noticias como JSON
+                echo json_encode($news_data);
+            } else {
+                // Si no hay resultados, devolver un mensaje de error
+                header("HTTP/1.1 404 Not Found");
+                echo json_encode(array("message" => "No se encontraron noticias con el título especificado"));
+            }
+        
+            $stmt->close();
+        }
+        
     }
 
     // Crear una instancia del controlador y llamar al método según la solicitud
     $newsController = new NewsController($conn);
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getNews') {
         echo $newsController->getNews();
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getNewsByTitle' && isset($_GET['title'])) {
+        $title = $_GET['title'];
+        echo $newsController->getNewsByTitle($title);
     }
+
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }

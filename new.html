@@ -35,7 +35,8 @@
 	<!-- Favicon  -->
     <link rel="icon" href="images/favicon.png">
 
- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body data-spy="scroll" data-target=".fixed-top">
     
@@ -138,13 +139,15 @@
     <div  id="intro" class="basic-1">
         <div class="containers">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8" id="new">
+                    <h1 class="mb-1">Título de la noticia</h1>
+                    <h4>Fecha de publicación</h4>
+                    <div class="image-container">
+                        <img class="img-fluid" src="#" alt="alternative">
+                    </div>
                     <div class="text-container">
-                        <h1>Recibir Parámetro por URL</h1>
-                        <p id="resultado"></p>
-
-                      
-                    </div> <!-- end of text-container --> 
+                        Contenido de la noticia
+                    </div>
                 </div>
 
  
@@ -207,14 +210,15 @@
         
         // Verificar si el parámetro está presente y obtener su valor
         const title = urlParams.get('title');
-        
+        $(document).ready(function(){
+            getNewByTitle(title)// Llama a la función una vez cargada la página
+ 
+        });
 
-        // Manejar el parámetro recibido
-        if (title) {
-            document.getElementById('resultado').textContent = 'El parámetro recibido es: ' + title;
-        } else {
-            document.getElementById('resultado').textContent = 'No se ha recibido ningún parámetro.';
-        }
+     
+
+
+ 
     </script>
     <!-- Scripts -->
     <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
@@ -227,5 +231,6 @@
     <script src="js/isotope.pkgd.min.js"></script> <!-- Isotope for filter -->
     <script src="js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script> <!-- Custom scripts -->
+ 
 </body>
 </html>
