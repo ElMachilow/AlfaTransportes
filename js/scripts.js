@@ -473,7 +473,9 @@
                     '<div class="p-3">' + 
                     '<div class="btn-group">' + 
                     '<button type="button" class="btn btn-primary mr-2" onclick="updateNews(' + news.idNews + ')"><i class="fas fa-edit"></i> Actualizar</button>' +
-                    '<button type="button" class="btn btn-secondary" onclick="deleteNews(' + news.idNews + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +                    '</div>' +
+                    '<button type="button" class="btn btn-secondary mr-2" onclick="deleteNews(' + news.idNews + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +   
+                    '<button type="button" class="btn btn-info" onclick="viewNews(\'' + news.title + '\')">Ver</button>' +
+                    '</div>' +
                     '</div>' +
                     '</div>';
 
@@ -497,4 +499,9 @@
             }
         });
     }
+    }
+
+    function viewNews(title) {
+        var url = '../new.html?title=' + encodeURIComponent(title);
+        window.open(url, '_blank');
     }

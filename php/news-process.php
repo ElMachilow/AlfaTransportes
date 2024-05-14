@@ -23,26 +23,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     } 
-    echo  'QUE IMPRIME EN ID USER';
-    echo  $idUser;
-    // Preparar y ejecutar la consulta SQL
-    $current_date = date("Y-m-d"); 
-    $sql = "INSERT INTO news (idUser, title, detail, image, date) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-   
-    // Vincular parámetros utilizando variables por referencia 
-    $stmt->bind_param("sssss", $idUser, $title, $detail, $imagenContenido, $current_date);
 
-    
-    if ($stmt->execute() === TRUE) {
-        echo "Datos guardados exitosamente.";
+    // Consultar si ya existe un registro con un título similar
+    $sql_check = "SELECT * FROM news WHERE title LIKE ?";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bind_param("s", $title);
+    $stmt_check->execute();
+    $result = $stmt_check->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "Ya existe un registro con un título similar.";
     } else {
-        echo "Error al guardar los datos: " . $conn->error;
+        // Preparar y ejecutar la consulta SQL
+        $current_date = date("Y-m-d"); 
+        $sql_insert = "INSERT INTO news (idUser, title, detail, image, date) VALUES (?, ?, ?, ?, ?)";
+        $stmt_insert = $conn->prepare($sql_insert);
+        
+        // Vincular parámetros utilizando variables por referencia 
+        $stmt_insert->bind_param("sssss", $idUser, $title, $detail, $imagenContenido, $current_date);
+
+        if ($stmt_insert->execute() === TRUE) {
+            echo "Datos guardados exitosamente.";
+        } else {
+            echo "Error al guardar los datos: " . $conn->error;
+        }
+
+        // Cerrar la consulta de inserción
+        $stmt_insert->close();
     }
-    
-    // Cerrar conexión
-    $stmt->close();
+
+    // Cerrar consulta de verificación y conexión
+    $stmt_check->close();
     $conn->close();
 }
 ?>
- 

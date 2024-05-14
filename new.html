@@ -18,7 +18,7 @@
 	<meta property="og:type" content="article" />
 
     <!-- Website Title -->
-    <title>News Admin</title>
+    <title>New</title>
     
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet">
@@ -35,23 +35,7 @@
 	<!-- Favicon  -->
     <link rel="icon" href="images/favicon.png">
 
-    <script>
-        tinymce.init({
-          selector: '#detail',
-          language: 'sv_SE',
-          branding: false,
-          menubar: false,
-         /* plugins: [
-            'a11ychecker','advlist','advcode','advtable','autolink','checklist','markdown',
-            'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-            'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
-          ], */
-          toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
-            'alignleft aligncenter alignright alignjustify | ' +
-            'bullist numlist checklist outdent indent | removeformat',
-          statusbar:false
-        });
-    </script>
+ 
 </head>
 <body data-spy="scroll" data-target=".fixed-top">
     
@@ -150,47 +134,27 @@
     <!-- end of header -->
 
  
-
     <!-- Terms Content -->
     <div  id="intro" class="basic-1">
         <div class="containers">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="text-container">
-                        <form id="newsForm" data-toggle="validator" data-focus="false" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <input type="text" name="title" class="titulo" id="title" placeholder="Título" onclick="this.focus()">
-                            </div>
-                            <div class="form-group">
-                                <input type="file" name="image" id="image" accept="image/*" onchange="mostrarVistaPrevia()">
-                                <img id="vista-previa" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 300px;">
-                            </div> 
-                            <div class="form-group">
-                                <textarea name="detail" id="detail"> Nueva Noticia</textarea>
-                            </div> 
-                            <div class="form-group">
-                                <button type="submit" class="form-control-submit-button">GUARDAR</button>
-                            </div>
-                        </form>
+                        <h1>Recibir Parámetro por URL</h1>
+                        <p id="resultado"></p>
 
                       
                     </div> <!-- end of text-container --> 
                 </div>
 
-            <div class="col-lg-4">
-                <div class="item">
-
-                    <div  id="newsContainer"></div>
-
-                </div> 
-            </div>
+ 
 
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of ex-basic -->
     <!-- end of terms content -->
 
-  
+
     <!-- Footer -->
     <div class="footer" class="form-2"> 
         <div class="container">
@@ -237,26 +201,21 @@
 
     </div> <!-- end of footer -->
     <!-- end of footer -->
- 
     <script>
-        // Función para mostrar la vista previa de la imagen seleccionada
-        function mostrarVistaPrevia() {
-            var archivo = document.getElementById("image").files[0];
-            var vistaPrevia = document.getElementById("vista-previa");
+        // Obtener los parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Verificar si el parámetro está presente y obtener su valor
+        const title = urlParams.get('title');
+        
 
-            // Validar si se ha seleccionado un archivo
-            if (archivo) {
-                // Crear un objeto URL para el archivo seleccionado
-                var urlArchivo = URL.createObjectURL(archivo);
-
-                // Mostrar la vista previa de la imagen
-                vistaPrevia.src = urlArchivo;
-                vistaPrevia.style.display = "block";
-            }
+        // Manejar el parámetro recibido
+        if (title) {
+            document.getElementById('resultado').textContent = 'El parámetro recibido es: ' + title;
+        } else {
+            document.getElementById('resultado').textContent = 'No se ha recibido ningún parámetro.';
         }
- 
     </script>
-
     <!-- Scripts -->
     <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
     <script src="js/popper.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
