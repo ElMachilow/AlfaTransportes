@@ -288,8 +288,7 @@
 
 
     /* Privacy Form */
-    $("#loginForm").validator().on("submit", function (event) {
-        console.log('entra 1');
+    $("#loginForm").validator().on("submit", function (event) { 
         if (event.isDefaultPrevented()) {
             // handle the invalid form...
             pformError();
@@ -363,20 +362,86 @@
     }
 
     /* NEWS */
-    $("#newsForm").validator().on("submit", function (event) {
-        console.log('entra 1');
-        if (event.isDefaultPrevented()) {
-            // handle the invalid form...
-            /* pformError();
-             psubmitMSG(false, "Please fill all fields!");*/
-        } else {
-            // everything looks good!
-            event.preventDefault();
+    $("#newsForm").on("submit", function(event) {
+        event.preventDefault();
+        var isValid = true;
+
+        // Ocultar mensajes de error
+        $("#titleError, #imageError, #detailError").hide();
+
+        // Validación del título
+        if ($("#title").val().trim() === "") {
+            $("#titleError").show();
+            isValid = false;
+        }
+
+        // Validación de la imagen
+        if ($("#image")[0].files.length === 0) {
+            $("#imageError").show();
+            isValid = false;
+        }
+
+        // Validación del detalle
+        if ($("#detail").val().trim() === "") {
+            $("#detailError").show();
+            isValid = false;
+        }
+
+        // Validación del usuario
+        var user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.idUser) {
+            alert("Es obligatorio haber iniciado sesión.");
+            isValid = false;
+        }
+
+        if (isValid) {
             nsubmitForm();
         }
     });
 
+
     function nsubmitForm() {
+        /*var formData = new FormData($("#newsForm")[0]);
+        var user = JSON.parse(localStorage.getItem('user'));
+        formData.append('idUser', user.idUser);
+        */
+
+
+        $("#newsForm").submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            var user = JSON.parse(localStorage.getItem('user'));
+            formData.append('idUser', user.idUser);
+
+            $.ajax({
+                url: "php/news-process.php",
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response.includes("Ya existe un registro con un título similar.")) {
+                        alert("Ya existe un registro con un título similar.");
+                    } else if (response.includes("Datos guardados exitosamente.")) {
+                        alert("Datos guardados exitosamente.");
+                        // Limpiar el formulario
+                        $("#newsForm")[0].reset();
+                        formData = null;
+                        $("#vista-previa").attr("src", "#").hide();
+                    } else {
+                        alert("Error al guardar los datos: " + response);
+                    }
+                    getNews();
+                },
+                error: function(xhr, status, error) {
+                    alert("Ha ocurrido un error: " + error);
+                }
+            });
+        });    
+    }
+
+    /*function nsubmitForm() {
 
         $("#newsForm").submit(function (e) {
             e.preventDefault();
@@ -401,7 +466,7 @@
             });
         });
 
-    }
+    } */
 
     /* END NEWS */
     /* Back To Top Button */
