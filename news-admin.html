@@ -194,13 +194,16 @@
                     </div> <!-- end of text-container --> 
                 </div>
 
-            <div class="col-lg-4">
-                <div class="item">
-
-                    <div  id="newsContainer" style="overflow: auto; height: 100vh;"></div>
-
-                </div> 
-            </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control-input" id="titles" oninput="filterNewsByTitle()">
+                        <label class="label-control" for="title">Buscar por Titulo</label>
+                    </div>
+                    <div class="item"> 
+                        <div id="newsContainer" style="overflow: auto; height: 100vh;"></div> 
+                    </div> 
+                </div>
+                
 
             </div> <!-- end of row -->
         </div> <!-- end of container -->

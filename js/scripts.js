@@ -501,26 +501,10 @@
 
 })(jQuery);
 
-
-// Función para realizar la solicitud AJAX y mostrar las noticias
-function getNews() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var newsData = JSON.parse(xhr.responseText);
-            showNews(newsData);
-        } else if (xhr.readyState === 4 && xhr.status === 404) {
-            console.log('Error: No se encontraron noticias');
-        }
-    };
-    xhr.send();
-}
-
-// Función para mostrar las noticias en el contenedor HTML
-// Función para mostrar las noticias en el contenedor HTML
-// Función para mostrar las noticias en el contenedor HTML
+// Variable para almacenar todos los datos de noticias
+var allNewsData = [];
+ 
+// Función para mostrar las noticias
 function showNews(newsData) {
     var newsContainer = document.getElementById('newsContainer');
     newsContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar noticias
@@ -548,6 +532,40 @@ function showNews(newsData) {
         newsContainer.appendChild(newsItem);
     });
 }
+
+function filterNewsByTitle() {
+    var input = document.querySelector('#titles');
+    var filter = input.value.toUpperCase();
+    var filteredNews = [];
+    console.log('trae algo el filtro',input )
+
+    // Filtrar noticias por título
+    allNewsData.forEach(function(news) {
+        if (news.title.toUpperCase().includes(filter)) {
+            filteredNews.push(news);
+        }
+    });
+    console.log('que imprime',filteredNews )
+    // Mostrar las noticias filtradas
+    showNews(filteredNews);
+}
+
+// Método para obtener las noticias
+function getNews() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            allNewsData = JSON.parse(xhr.responseText); // Almacenar todos los datos de noticias
+            showNews(allNewsData); // Mostrar todas las noticias inicialmente
+        } else if (xhr.readyState === 4 && xhr.status === 404) {
+            console.log('Error: No se encontraron noticias');
+        }
+    };
+    xhr.send();
+}
+
 function deleteNews(idNews) {
     // Aquí puedes implementar la lógica para eliminar la noticia con el ID proporcionado
     console.log('Eliminar noticia con ID:', idNews);
