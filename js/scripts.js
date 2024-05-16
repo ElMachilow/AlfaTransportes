@@ -514,7 +514,11 @@ function showNews(newsData) {
         // Crear un div para cada noticia y aplicar clases según la estructura HTML deseada
         var newsItem = document.createElement('div');
         //newsItem.classList.add('col-lg-4');
-        newsItem.innerHTML = '<div class="list-item">' +
+        // Verificar si existe un usuario en el localStorage
+        var user = JSON.parse(localStorage.getItem('user'));
+        // Verificar si el usuario existe y tiene un ID
+        if (user && user.idUser) {
+            newsItem.innerHTML = '<div class="list-item card mb-2">' +
             '<div class="p-3">' +
             '<h2>' + news.title + '</h2>' +
             '<img src="data:image/jpeg;base64,' + news.image + '" class="img-fluid" alt="Imagen ' + (index + 1) + '">' +
@@ -527,6 +531,15 @@ function showNews(newsData) {
             '</div>' +
             '</div>' +
             '</div>';
+        }else{
+            newsItem.innerHTML = '<div class="list-item card mb-2" onclick="viewNews(\'' + news.title + '\')"  style="cursor: pointer;">' +
+            '<div class="p-3">' +
+            '<h2>' + news.title + '</h2>' +
+            '<img src="data:image/jpeg;base64,' + news.image + '" class="img-fluid" alt="Imagen ' + (index + 1) + '">' +
+            '</div>' + 
+            '</div>';
+        }
+
 
         // Agregar el div de la noticia al contenedor
         newsContainer.appendChild(newsItem);
