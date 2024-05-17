@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    $sql_check = "SELECT * FROM news WHERE title LIKE ?";
+    $sql_check = "SELECT * FROM news WHERE title = ?";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->bind_param("s", $title);
     $stmt_check->execute();
