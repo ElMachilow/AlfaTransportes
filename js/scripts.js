@@ -300,8 +300,7 @@
         }
     });
 
-    function psubmitForm() {
-        console.log('entra 2');
+    function psubmitForm() { 
         // initiate variables with form content 
         var email = $("#pemail").val();
         var password = $("#ppassword").val();
@@ -312,8 +311,7 @@
             data: { email: email, password: password }, // Pasar los datos como objeto
             dataType: 'json', // Esperar JSON como respuesta
             success: function (response) {
-                if (response.status === "success") {
-                    console.log('QUE TRAE ', response)
+                if (response.status === "success") { 
                     pformSuccess();
 
                     // Crear un nuevo objeto con los campos necesarios
@@ -362,8 +360,7 @@
     }
 
     /* NEWS */
-    $("#newsForm").on("submit", function(event) {
-        console.log('envia 1');
+    $("#newsForm").on("submit", function(event) { 
         event.preventDefault();
         var isValid = true;
 
@@ -382,14 +379,12 @@
             isValid = false;
         }
 
-        var detailContent = tinymce.get('detail').getContent({ format: 'text' });
-        console.log('QUE TIENE DETALLE', detailContent);
+        var detailContent = tinymce.get('detail').getContent({ format: 'text' }); 
 
         // Validación del detalle
         if (detailContent.trim() === "") {
             $("#detailError").show();
-            isValid = false;
-            console.log('envia 2');
+            isValid = false; 
         }
 
         // Validación del usuario
@@ -450,35 +445,7 @@
         var defaultFileName = 'Seleccione una imagen'; // Nombre de archivo predeterminado
         //document.getElementById('imageFileName').innerText = defaultFileName; // Restablecer el nombre del archivo en la etiqueta
     }
-     
-
-    /*function nsubmitForm() {
-
-        $("#newsForm").submit(function (e) {
-            e.preventDefault();
-
-            var formData = new FormData(this);
-            var user = JSON.parse(localStorage.getItem('user')); // Obtener los datos del usuario del localStorage
-            console.log('ID', user.idUser)
-            // Agregar los datos del usuario al formData
-            formData.append('idUser', user.idUser);
-
-            $.ajax({
-                url: "php/news-process.php",
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    console.log(response);
-                    getNews();
-                    // Puedes hacer algo con la respuesta aquí
-                }
-            });
-        });
-
-    } */
-
+    
     /* END NEWS */
     /* Back To Top Button */
     // create the back to top button
@@ -558,8 +525,7 @@ function showNews(newsData) {
 function filterNewsByTitle() {
     var input = document.querySelector('#titles');
     var filter = input.value.toUpperCase();
-    var filteredNews = [];
-    console.log('trae algo el filtro',input )
+    var filteredNews = []; 
 
     // Filtrar noticias por título
     allNewsData.forEach(function(news) {
@@ -567,7 +533,6 @@ function filterNewsByTitle() {
             filteredNews.push(news);
         }
     });
-    console.log('que imprime',filteredNews )
     // Mostrar las noticias filtradas
     showNews(filteredNews);
 }
@@ -596,9 +561,7 @@ function updateNews(idNews) {
         document.getElementById('idNews').value = news.idNews;
         document.getElementById('title').value = news.title;
         document.getElementById('detail').value = news.detail;
-
-        
-        console.log('que news eligio',  document.getElementById('detail').value );
+ 
         // Convertir la imagen base64 a un Blob para mostrarla en el campo de vista previa
         var base64Image = news.image.startsWith('data:image') ? news.image.split(',')[1] : news.image;
         var byteString = atob(base64Image);
