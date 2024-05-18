@@ -21,7 +21,7 @@ try {
         }
 
         public function getNews() {
-            $sql = "SELECT idNews, title, date, nameImg FROM news ORDER BY idNews DESC";
+            $sql = "SELECT idNews, title, date, nameImg, detail FROM news ORDER BY idNews DESC";
             $result = $this->conn->query($sql);
 
             $news_data = array();

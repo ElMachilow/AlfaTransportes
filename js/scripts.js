@@ -363,6 +363,7 @@
 
     /* NEWS */
     $("#newsForm").on("submit", function(event) {
+        console.log('envia 1');
         event.preventDefault();
         var isValid = true;
 
@@ -381,10 +382,14 @@
             isValid = false;
         }
 
+        var detailContent = tinymce.get('detail').getContent({ format: 'text' });
+        console.log('QUE TIENE DETALLE', detailContent);
+
         // Validación del detalle
-        if ($("#detail").val().trim() === "") {
+        if (detailContent.trim() === "") {
             $("#detailError").show();
             isValid = false;
+            console.log('envia 2');
         }
 
         // Validación del usuario
@@ -401,45 +406,51 @@
 
 
     function nsubmitForm() {
-        /*var formData = new FormData($("#newsForm")[0]);
+        var formData = new FormData($("#newsForm")[0]);
         var user = JSON.parse(localStorage.getItem('user'));
         formData.append('idUser', user.idUser);
-        */
-
-
-        $("#newsForm").submit(function (e) {
-            e.preventDefault();
-
-            var formData = new FormData(this);
-            var user = JSON.parse(localStorage.getItem('user'));
-            formData.append('idUser', user.idUser);
-
-            $.ajax({
-                url: "php/news-process.php",
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.includes("Ya existe un registro con un título similar.")) {
-                        alert("Ya existe un registro con un título similar.");
-                    } else if (response.includes("Datos guardados exitosamente.")) {
-                        alert("Datos guardados exitosamente.");
-                        // Limpiar el formulario
-                        $("#newsForm")[0].reset();
-                        formData = null;
-                        $("#vista-previa").attr("src", "#").hide();
-                    } else {
-                        alert("Error al guardar los datos: " + response);
-                    }
+        var detailContent = tinymce.get('detail').getContent();
+        
+        formData.append('detail', detailContent);
+ 
+         $.ajax({
+            url: "php/news-process.php",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response === "Ya existe un registro con un título similar.") {
+                    alert(response);
+                } else if (response === "Datos guardados exitosamente." || response === "Datos actualizados exitosamente.") {
+                    alert(response);
+                    // Limpiar el formulario
+                    resetForm();
+                    // Recargar las noticias
                     getNews();
-                },
-                error: function(xhr, status, error) {
-                    alert("Ha ocurrido un error: " + error);
+                } else {
+                    alert("Error al guardar los datos: " + response);
                 }
-            });
-        });    
+            },
+            error: function(xhr, status, error) {
+                alert("Ha ocurrido un error: " + error);
+            }
+        });
     }
+    function resetForm() {
+        $("#newsForm")[0].reset();
+        $("#vista-previa").attr("src", "#").hide();
+        tinymce.get('detail').setContent(''); // Limpiar el contenido del editor TinyMCE
+        $("#idNews").val(''); // Limpiar el campo oculto de idNews si existe
+    
+        // Limpiar el campo de archivo de imagen y restablecer el valor predeterminado del nombre de archivo
+        var imageInput = document.getElementById('image');
+        imageInput.value = ''; // Limpiar el valor del campo de archivo
+        imageInput.files = null; // Limpiar los archivos seleccionados
+        var defaultFileName = 'Seleccione una imagen'; // Nombre de archivo predeterminado
+        //document.getElementById('imageFileName').innerText = defaultFileName; // Restablecer el nombre del archivo en la etiqueta
+    }
+     
 
     /*function nsubmitForm() {
 
@@ -513,7 +524,6 @@ function showNews(newsData) {
     newsData.forEach(function (news, index) {
         // Crear un div para cada noticia y aplicar clases según la estructura HTML deseada
         var newsItem = document.createElement('div');
-        //newsItem.classList.add('col-lg-4');
         // Verificar si existe un usuario en el localStorage
         var user = JSON.parse(localStorage.getItem('user'));
         // Verificar si el usuario existe y tiene un ID
@@ -531,15 +541,14 @@ function showNews(newsData) {
             '</div>' +
             '</div>' +
             '</div>';
-        }else{
-            newsItem.innerHTML = '<div class="list-item card mb-2" onclick="viewNews(\'' + news.title + '\')"  style="cursor: pointer;">' +
+        } else {
+            newsItem.innerHTML = '<div class="list-item card mb-2" onclick="viewNews(\'' + news.title + '\')" style="cursor: pointer;">' +
             '<div class="p-3">' +
             '<h2>' + news.title + '</h2>' +
             '<img src="data:image/jpeg;base64,' + news.image + '" class="img-fluid" alt="Imagen ' + (index + 1) + '">' +
-            '</div>' + 
+            '</div>' +
             '</div>';
         }
-
 
         // Agregar el div de la noticia al contenedor
         newsContainer.appendChild(newsItem);
@@ -579,9 +588,51 @@ function getNews() {
     xhr.send();
 }
 
-function deleteNews(idNews) {
-    // Aquí puedes implementar la lógica para eliminar la noticia con el ID proporcionado
-    console.log('Eliminar noticia con ID:', idNews);
+// Función para cargar datos de una noticia en el formulario
+function updateNews(idNews) {
+    var news = allNewsData.find(news => news.idNews === String(idNews));
+    news.nameImg = 'news.jpeg'
+    if (news) {
+        document.getElementById('idNews').value = news.idNews;
+        document.getElementById('title').value = news.title;
+        document.getElementById('detail').value = news.detail;
+
+        
+        console.log('que news eligio',  document.getElementById('detail').value );
+        // Convertir la imagen base64 a un Blob para mostrarla en el campo de vista previa
+        var base64Image = news.image.startsWith('data:image') ? news.image.split(',')[1] : news.image;
+        var byteString = atob(base64Image);
+        var mimeString = news.image.startsWith('data:image') ? news.image.split(',')[0].split(':')[1].split(';')[0] : 'image/jpeg';
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        var blob = new Blob([ab], { type: mimeString });
+        var url = URL.createObjectURL(blob);
+
+        document.getElementById('vista-previa').src = url;
+        document.getElementById('vista-previa').style.display = 'block';
+
+        // Simula la carga del archivo en el input file
+        var imageInput = document.getElementById('image');
+        var dataTransfer = new DataTransfer();
+        dataTransfer.items.add(new File([blob], news.nameImg, { type: mimeString }));
+        imageInput.files = dataTransfer.files;
+
+        // Limpiar errores previos
+        document.getElementById('titleError').style.display = 'none';
+        document.getElementById('imageError').style.display = 'none';
+        document.getElementById('detailError').style.display = 'none';
+
+        tinymce.get('detail').setContent(news.detail);
+
+    }
+}
+
+
+
+function deleteNews(idNews) { 
     var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta noticia?");
     if (confirmDelete) {
         $.ajax({
@@ -602,8 +653,7 @@ function viewNews(title) {
     window.open(url, '_blank');
 }
 
-function getNewByTitle(title) {
-    console.log('INICIA 1')
+function getNewByTitle(title) { 
     $.ajax({
         url: 'php/list-all-news-process.php',
         type: 'GET',
