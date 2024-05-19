@@ -754,7 +754,7 @@ input[type='checkbox'] {
 }
 
 .navbar-custom .dropdown-item {
-	color: #fff;
+	color: #861315;
 	text-decoration: none;
 }
 
@@ -2279,7 +2279,7 @@ a #home-tab .nav-link{
 	/* end of extra pages */
 
 	.navbar-custom .nav-item .nav-link:hover, .navbar-custom .nav-item .nav-link.active {
-		color: #BF1E22 !important;
+		color: white !important;
 	}
 
 	.navbar-dark .navbar-nav .nav-link {

@@ -51,7 +51,7 @@
         <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
         <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>
+        <a class="navbar-brand logo-image" href="index.html"><img src="images/logo-small.png" alt="alternative"></a>
         
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,52 +63,61 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link page-scroll"href="login.html"> INICIO <span class="sr-only">(current)</span></a>
+                    <a class="nav-link page-scroll" href="index.html#header"> INICIO <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">NOSOTROS</a>
+                    <a class="nav-link page-scroll" href="index.html#intro">NOSOTROS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">VALORES</a>
+                    <a class="nav-link page-scroll" href="index.html#valores">VALORES</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">POLITICAS</a>
+                    <a class="nav-link page-scroll" href="index.html#flota">POLITICAS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">SERVICIOS</a>
+                    <a class="nav-link page-scroll" href="index.html#servicios">SERVICIOS</a>
                 </li>   
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">CERTIFICACIONES</a>
+                    <a class="nav-link page-scroll" href="index.html#certificacion">CERTIFICACIONES</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">CLIENTES</a>
+                    <a class="nav-link page-scroll" href="index.html#callMe">CLIENTES</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">GALERIA</a>
+                    <a class="nav-link page-scroll" href="index.html#galeria">GALERIA</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">CONTACTO</a>
+                    <a class="nav-link page-scroll" href="index.html#contact">CONTACTO</a>
                 </li>
  
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="login.html">LOGIN</a>
+                <li class="nav-item menu-login">
+                    <a class="nav-link page-scroll" href="index.htmllogin.html">LOGIN</a>
+                </li>
+                <!-- Dropdown Menu -->
+                <li class="nav-item dropdown" style="display: none;">
+                    <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" id="logout"><span class="item-text">Cerrar Sesión</span></a>
+                    </div>
                 </li>
 
             </ul>
+
             <span class="nav-item social-icons">
                 <span class="fa-stack">
-                    <a href="#your-link">
+                    <a href="https://www.facebook.com/transporte.internacional.alfa/">
                         <span class="hexagon"></span>
                         <i class="fab fa-facebook-f fa-stack-1x"></i>
                     </a>
                 </span>
                 <span class="fa-stack">
-                    <a href="#your-link">
+                    <a href="https://wa.me/51999306361">
                         <span class="hexagon"></span>
-                        <i class="fab fa-twitter fa-stack-1x"></i>
+                        <i class="fab fa-whatsapp fa-stack-1x"></i>
                     </a>
                 </span>
-            </span>
+            </span> 
+
         </div>
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
@@ -165,7 +174,7 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control-input" id="ppassword" required>
+                                        <input type="password" class="form-control-input" id="ppassword" required>
                                         <label class="label-control" for="ppassword">Contraseña</label>
                                         <div class="help-block with-errors"></div>
                                     </div> 

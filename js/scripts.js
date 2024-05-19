@@ -756,3 +756,21 @@ function cardNews(newsData) {
         newsContainer.appendChild(card);
     });
 }
+
+document.getElementById('logout').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+    localStorage.removeItem('user'); // Eliminar el usuario del localStorage
+    window.location.href = 'login.html'; // Redireccionar a la página de login
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    var user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.idUser) {
+        // Ocultar el elemento de login
+        document.querySelector('.menu-login').style.display = 'none';
+
+        // Mostrar el menú desplegable
+        document.querySelector('.dropdown').style.display = 'block';
+    }
+});
