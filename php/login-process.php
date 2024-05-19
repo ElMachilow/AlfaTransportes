@@ -14,17 +14,7 @@ if (empty($_POST["password"])) {
     $password = $_POST["password"];
 }
  
-$servername = "127.0.0.1:3308";
-$username = "root";
-$pass = "mysql";
-$database = "alfa";
-// Crear conexión
-$conn = new mysqli($servername, $username, $pass, $database);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+include 'database-process.php';   
 
 // Datos del formulario
 $email = $_POST['email'];

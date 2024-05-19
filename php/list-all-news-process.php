@@ -1,16 +1,9 @@
 <?php
-// Conexión a la base de datos
-$servername = "127.0.0.1:3308";
-$username = "root";
-$password = "mysql";
-$dbname = "alfa";
+ 
 
 try {
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
+    
+    include 'database-process.php';  
 
     // Modelo y controlador juntos
     class NewsController {
@@ -147,14 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['delete'])) {
         $idToDelete = intval($_POST['delete']);
 
-        // Crear conexión
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Verificar la conexión
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-
+        include 'database-process.php';   
         // Preparar y ejecutar la consulta SQL para eliminar la noticia
         $sql = "DELETE FROM news WHERE idNews = ?";
         $stmt = $conn->prepare($sql);

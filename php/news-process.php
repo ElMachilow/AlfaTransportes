@@ -11,20 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imagenTmpNombre = $_FILES['image']['tmp_name'];
     $imagenContenido = file_get_contents($imagenTmpNombre);
 
-    // Guardar datos en la base de datos
-    $servername = "127.0.0.1:3308";
-    $username = "root";
-    $pass = "mysql";
-    $database = "alfa";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $username, $pass, $database);
-
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
-
+    include 'database-process.php';  
     // Inicializar variables para mensajes
     $message = "";
 
