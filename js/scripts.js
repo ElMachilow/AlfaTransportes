@@ -475,6 +475,7 @@
     window.onload = function () {
         getNews();
         fetchNews();
+        getNewsCards();
     };
 
 
@@ -539,14 +540,32 @@ function filterNewsByTitle() {
 }
 
 // Método para obtener las noticias
-function getNews() {
+function getNews() {  
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            allNewsData = JSON.parse(xhr.responseText); // Almacenar todos los datos de noticias
-            showNews(allNewsData); // Mostrar todas las noticias inicialmente
+            allNewsData = JSON.parse(xhr.responseText);  
+            showNews(allNewsData); // Mostrar todas las noticias inicialmente 
+           
+        } else if (xhr.readyState === 4 && xhr.status === 404) {
+            console.log('Error: No se encontraron noticias');
+        }
+    };
+    xhr.send();
+}
+
+// Método para obtener las noticias
+function getNewsCards() {  
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'php/list-all-news-process.php?action=getNews', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            allNewsData = JSON.parse(xhr.responseText);  
+            cardNews(allNewsData); 
+           
         } else if (xhr.readyState === 4 && xhr.status === 404) {
             console.log('Error: No se encontraron noticias');
         }
@@ -698,6 +717,31 @@ function fetchNews() {
 
         card.innerHTML = `
             <div class="card" onclick="viewNews('${news.title}')" style="cursor: pointer;">
+                <div class="card-image" style="height: 20vh;">
+                    <img class="img-fluid" src="data:image/jpeg;base64,${news.image}" style="height: 100%;width: 100%;" alt="alternative">
+                </div>
+                <div class="card-body">
+                    <h3 class="section-title" style="text-align: justify;">${news.title}</h3>
+                    <h4 class="detail">${formatDate(news.date)}</h4>
+                    <div class="detail">${news.detail}</div>
+                </div>
+            </div>
+        `;
+
+        newsContainer.appendChild(card);
+    });
+}
+
+function cardNews(newsData) {
+    console.log('demo 2');
+    var newsContainer = document.getElementById("newsContainerCards");
+
+    newsData.forEach(function(news) {
+        var card = document.createElement("div");
+        card.className = "col-lg-4";
+
+        card.innerHTML = `
+            <div class="card mb-3" onclick="viewNews('${news.title}')" style="cursor: pointer;">
                 <div class="card-image" style="height: 20vh;">
                     <img class="img-fluid" src="data:image/jpeg;base64,${news.image}" style="height: 100%;width: 100%;" alt="alternative">
                 </div>
