@@ -95,6 +95,34 @@ try {
         
             $stmt->close();
         }
+
+        public function getLastThreeNews() {
+            $sql = "SELECT idNews, title, date, nameImg, detail FROM news ORDER BY idNews DESC LIMIT 3";
+            $result = $this->conn->query($sql);
+        
+            $news_data = array();
+        
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    // Obtener la imagen para esta noticia
+                    $image = $this->getImage($row['idNews']);
+        
+                    // Agregar la imagen al arreglo de datos de la noticia
+                    $row['image'] = $image;
+        
+                    // Agregar la noticia al arreglo de datos de las noticias
+                    $news_data[] = $row;
+                }
+        
+                // Devolver las últimas tres noticias como JSON
+                echo json_encode($news_data);
+            } else {
+                // Si no hay resultados, devolver un mensaje de error
+                header("HTTP/1.1 404 Not Found");
+                echo json_encode(array("message" => "No se encontraron noticias"));
+            }
+        }
+        
         
     }
 
@@ -105,6 +133,8 @@ try {
     } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getNewsByTitle' && isset($_GET['title'])) {
         $title = $_GET['title'];
         echo $newsController->getNewsByTitle($title);
+    }elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getLastThreeNews') {
+        echo $newsController->getLastThreeNews();
     }
 
 } catch (Exception $e) {

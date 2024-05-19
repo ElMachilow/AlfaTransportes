@@ -474,6 +474,7 @@
     // Llamar a la función para obtener y mostrar las noticias al cargar la página
     window.onload = function () {
         getNews();
+        fetchNews();
     };
 
 
@@ -502,7 +503,7 @@ function showNews(newsData) {
             '</div>' +
             '<div class="p-3">' +
             '<div class="btn-group">' +
-            '<button type="button" class="btn btn-primary mr-2" onclick="updateNews(' + news.idNews + ')"><i class="fas fa-edit"></i> Actualizar</button>' +
+            '<button type="button" class="btn btn-primary mr-2" onclick="updateNews(' + news.idNews + ')"><i class="fas fa-edit"></i> Editar </button>' +
             '<button type="button" class="btn btn-secondary mr-2" onclick="deleteNews(' + news.idNews + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +
             '<button type="button" class="btn btn-info" onclick="viewNews(\'' + news.title + '\')">Ver</button>' +
             '</div>' +
@@ -592,9 +593,7 @@ function updateNews(idNews) {
 
     }
 }
-
-
-
+ 
 function deleteNews(idNews) { 
     var confirmDelete = confirm("¿Estás seguro de que deseas eliminar esta noticia?");
     if (confirmDelete) {
@@ -651,4 +650,65 @@ function getNewByTitle(title) {
         }
     });
 
+}
+
+function fetchNews() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "php/list-all-news-process.php?action=getLastThreeNews", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var newsData = JSON.parse(xhr.responseText);
+                displayNews(newsData);
+            } else {
+                console.error("Error al obtener datos de las noticias");
+            }
+        }
+    };
+    xhr.send();
+}
+
+    // Función para formatear la fecha
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var day = date.getDate();
+        var month = date.toLocaleString('es-ES', { month: 'long' });
+        var year = date.getFullYear();
+
+        // Sufijos para los días
+        var suffix = 'th';
+        if (day === 1 || day === 21 || day === 31) {
+            suffix = 'st';
+        } else if (day === 2 || day === 22) {
+            suffix = 'nd';
+        } else if (day === 3 || day === 23) {
+            suffix = 'rd';
+        }
+
+        return `${month} ${day}${suffix}, ${year}`;
+    }
+
+ // Función para mostrar los datos de las noticias en las tarjetas HTML
+ function displayNews(newsData) {
+    var newsContainer = document.getElementById("newsContainerLastThreeNews");
+
+    newsData.forEach(function(news) {
+        var card = document.createElement("div");
+        card.className = "col-lg-4";
+
+        card.innerHTML = `
+            <div class="card" onclick="viewNews('${news.title}')" style="cursor: pointer;">
+                <div class="card-image" style="height: 20vh;">
+                    <img class="img-fluid" src="data:image/jpeg;base64,${news.image}" style="height: 100%;width: 100%;" alt="alternative">
+                </div>
+                <div class="card-body">
+                    <h3 class="section-title" style="text-align: justify;">${news.title}</h3>
+                    <h4 class="detail">${formatDate(news.date)}</h4>
+                    <div class="detail">${news.detail}</div>
+                </div>
+            </div>
+        `;
+
+        newsContainer.appendChild(card);
+    });
 }
