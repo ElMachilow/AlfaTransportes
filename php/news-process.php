@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Si se está actualizando, obtener el título original del registro
     $originalTitle = "";
     if ($idNews) {
-        $sql_get_original = "SELECT title FROM news WHERE idNews = ?";
+        $sql_get_original = "SELECT title FROM Alfa.news WHERE idNews = ?";
         $stmt_get_original = $conn->prepare($sql_get_original);
         $stmt_get_original->bind_param("i", $idNews);
         $stmt_get_original->execute();
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Consultar si ya existe un registro con un título similar (solo si el título es diferente del original)
     if ($title !== $originalTitle) {
-        $sql_check = "SELECT * FROM news WHERE title = ?";
+        $sql_check = "SELECT * FROM Alfa.news WHERE title = ?";
         $stmt_check = $conn->prepare($sql_check);
         $stmt_check->bind_param("s", $title);
         $stmt_check->execute();

@@ -21,7 +21,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 // Consulta SQL para verificar las credenciales del usuario
-$sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+$sql = "SELECT * FROM Alfa.User WHERE email = '$email' AND password = '$password'";
 $result = $conn->query($sql);
  
 if ($result->num_rows > 0) {

@@ -14,7 +14,7 @@ try {
         }
 
         public function getNews() {
-            $sql = "SELECT idNews, title, date, nameImg, detail FROM news ORDER BY idNews DESC";
+            $sql = "SELECT idNews, title, date, nameImg, detail FROM Alfa.news ORDER BY idNews DESC";
             $result = $this->conn->query($sql);
 
             $news_data = array();
@@ -41,7 +41,7 @@ try {
         }
 
         private function getImage($id) {
-            $stmt = $this->conn->prepare("SELECT image FROM news WHERE idNews = ?");
+            $stmt = $this->conn->prepare("SELECT image FROM Alfa.news WHERE idNews = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $stmt->bind_result($image); // Enlazar el resultado a una variable
@@ -59,7 +59,7 @@ try {
             $stmt->close();
         }
         public function getNewsByTitle($title) {
-            $stmt = $this->conn->prepare("SELECT idNews, title, date, nameImg, detail FROM news WHERE title = ?");
+            $stmt = $this->conn->prepare("SELECT idNews, title, date, nameImg, detail FROM Alfa.news WHERE title = ?");
             $stmt->bind_param("s", $title);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -90,7 +90,7 @@ try {
         }
 
         public function getLastThreeNews() {
-            $sql = "SELECT idNews, title, date, nameImg, detail FROM news ORDER BY idNews DESC LIMIT 3";
+            $sql = "SELECT idNews, title, date, nameImg, detail FROM Alfa.news ORDER BY idNews DESC LIMIT 3";
             $result = $this->conn->query($sql);
         
             $news_data = array();
@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         include 'database-process.php';   
         // Preparar y ejecutar la consulta SQL para eliminar la noticia
-        $sql = "DELETE FROM news WHERE idNews = ?";
+        $sql = "DELETE FROM Alfa.news WHERE idNews = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $idToDelete);
 
